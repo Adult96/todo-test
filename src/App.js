@@ -1,24 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [title, setTitle] = useState('');
+  const [todo, setTodo] = useState(['리액트 배우기']);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setTodo([...todo, title]);
+    setTitle('');
+  };
+
+  const handleChangeTitle = e => {
+    setTitle(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <form className='addTodo' onSubmit={handleSubmit}>
+        제목:
+        <input
+          className='title'
+          type='text'
+          value={title}
+          onChange={handleChangeTitle}
+        />
+        <button className='add'>추가하기</button>
+      </form>
+      <h1>Todo List</h1>
+      <ul className='list'>
+        {todo.map((item, index) => (
+          <li key={index} className='item'>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
